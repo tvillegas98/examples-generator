@@ -1,12 +1,20 @@
 from random import randint, sample
 from string import ascii_letters
-
+MAX_SERIAL_NUMBER_LENGTH = 6
 class ExampleGenerator:
-    
-    def __init__(self: __module__, fields: dict[str, str], name: str, file_type: str, samples: int, sep: str = " ") -> None:
+    default_name = "sample"
+    default_type = "txt"
+    default_samples = 100_000
+    default_sep = " "
+
+    def __init__(self: __module__, 
+                fields: dict[str, str], 
+                name: str = default_name, 
+                file_type: str = default_type,
+                samples: int = default_samples, 
+                sep: str = default_sep) -> __module__:
         self._fields: dict[str, str] = fields
         self._file_name: str = f"{name}.{file_type}"
-        self._serial_number: int = randint(1, 100_000)
         self._samples: int = samples
         self._sep = sep
     
@@ -24,8 +32,19 @@ class ExampleGenerator:
     def _create_sample(self: __module__, type: str) -> str:
         match type:
             case "str":
-                return "".join(sample(ascii_letters, 5))
+                return self.__generate_str_sample()
             case "serial":
-                return str(self._serial_number + 1)
+                return self.__generate_serial_sample()
             case "number":
-                return str(randint(1, 100_000_000))
+                return self.__generate_number_sample()
+
+    def __generate_str_sample(self: __module__):
+        return "".join(sample(ascii_letters, 5))
+
+    def __generate_serial_sample(self: __module__):
+        serial_number = f"{randint(1, 10_000)}"
+        return serial_number.zfill(MAX_SERIAL_NUMBER_LENGTH)
+
+
+    def __generate_number_sample(self: __module__):
+        return str(randint(1, 100_000))
