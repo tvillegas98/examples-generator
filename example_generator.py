@@ -2,6 +2,20 @@ from random import randint, sample
 from string import ascii_letters
 MAX_SERIAL_NUMBER_LENGTH = 6
 class ExampleGenerator:
+    """
+    A simple python class that allows teachers
+    to create random files for exercises with just a dictionary.
+    The dictionary should be structured like this:
+    {
+        "header name 1": "header 1's type"
+        ...
+        "header name n": "header n's type"
+    }
+    Where header's type could be one of these:
+    "str" -> a random string generated with ascii letters
+    "serial" -> random serial numbers that starts with zeros
+    "number" -> random numbers between 1 and 100_000
+    """
     default_name = "sample"
     default_type = "txt"
     default_samples = 100_000
@@ -44,7 +58,6 @@ class ExampleGenerator:
     def __generate_serial_sample(self: __module__):
         serial_number = f"{randint(1, 10_000)}"
         return serial_number.zfill(MAX_SERIAL_NUMBER_LENGTH)
-
 
     def __generate_number_sample(self: __module__):
         return str(randint(1, 100_000))
